@@ -1,0 +1,20 @@
+{
+  "name": "@credit-key/creditkey-js-sdk",
+  "version": "1.0.0",
+  "description": "Javascript SDK for Credit Key",
+  "main": "index.js",
+  "scripts": {
+    "build": "rollup index.js --file bundle.js --format umd --name 'ck-bundle'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/creditkey/creditkey-js-sdk.git"
+  },
+  "author": "Eben Goodman <eben.goodman@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/creditkey/creditkey-js-sdk/issues"
+  },
+  "homepage": "https://github.com/creditkey/creditkey-js-sdk#readme"
+}
