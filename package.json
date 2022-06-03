@@ -1,10 +1,11 @@
 {
   "name": "@credit-key/creditkey-js-sdk",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Javascript SDK for Credit Key",
-  "main": "index.js",
+  "main": "build/index.js",
+  "module": "build/index.js",
   "scripts": {
-    "build": "rollup index.js --file bundle.js --format umd --name 'ck-bundle'",
+    "build": "rollup --config rollup.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
