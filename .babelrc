@@ -1,11 +1,4 @@
 {
-  "presets": [
-    [
-      "es2015",
-      {
-        "modules": false
-      }
-    ]
-  ],
-  "plugins": ["external-helpers"]
+  "presets": ["@babel/env"],
+  "plugins": ["@babel/plugin-external-helpers"]
 }
