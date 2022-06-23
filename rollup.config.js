@@ -1,20 +1,18 @@
-import babel from 'rollup-plugin-babel';
+import { babel } from '@rollup/plugin-babel';
 
-export default [
-  {
-    plugins: [
-      babel({
-        exclude: 'node_modules/**',
-      }),
-    ],
-    input: 'index.js',
-    output: [{
-      file: 'build/index.js',
-      format: 'cjs'
-    }, {
-      file: 'build/bundle.js',
+export default {
+  input: 'build/index.js',
+  output: [
+    {
+      file: 'build/es/index.js',
+      format: 'cjs',
+      exports: 'named',
+    },
+    {
+      file: 'build/umd/creditkey.js',
       format: 'umd',
-      name: 'ck',
-    }]
-  }
-]
+      name: 'ck'
+    },
+  ],
+  plugins: [babel({ babelHelpers: 'external' })]
+}
