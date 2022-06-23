@@ -1,6 +1,10 @@
 import { actions, urls } from './settings';
 import { iframe, iframeCallback } from './modules/iframe';
 import { modal, modalCallback } from './modules/modal';
+import Charges from './helpers/charges';
+import Address from './helpers/address';
+import CartItem from './helpers/cart-item';
+import beginCheckout from './async/begin_checkout';
 
 const state = {
   public_key: '',
@@ -25,9 +29,23 @@ const ckSDK = (public_key, platform) => {
   state.platform = platform;
 
   return {
-    apply,
-    checkout,
-    promoDisplay
+    action: {
+      apply: apply,
+      checkout: checkout
+    },
+    display: {
+      apply: promoDisplay,
+      checkout: checkoutDisplay
+    },
+    async: {
+      apply: apply,
+      checkout: beginCheckout.bind(null, public_key, platform)
+    },
+    helper: {
+      address: Address,
+      cart_item: CartItem,
+      charges: Charges
+    }
   }
 }
 
@@ -41,11 +59,12 @@ const ckSDK = (public_key, platform) => {
  * that loads a state determined url
 */
 const promoDisplay = ( amount, version = 'v1', action = 'modal' ) => {
-  state.amount = amount;
-  state.action = action;
   const url = `${urls.marketing[state.platform]}/standard_pdp.html?public_key=${state.public_key}&amount=${amount}&version=${version}&action=${action}`;
-
   return iframe(url);
+}
+
+const checkoutDisplay = () => {
+  return '<img style="height:24px;" className="logo" src="https://creditkey-assets.s3-us-west-2.amazonaws.com/ck-checkout%402x.png" alt="CreditKey Logo" />';
 }
 
 const checkout = (url, action = 'modal') => {
@@ -71,6 +90,7 @@ const apply = (action = 'modal') => {
  * - options Object
   * */
 function registerPostMessageCallbacks() {
+  console.log('test');
   window.addEventListener('message', function (e) {
     let data;
 

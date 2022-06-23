@@ -2,7 +2,7 @@ import { actions, urls } from '../settings';
 
 export const iframe = url => {
   return `<div id="creditkey-wrapper">
-            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${url}"></iframe>
+            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${url}" width="100%"></iframe>
           </div>`;
 }
 
