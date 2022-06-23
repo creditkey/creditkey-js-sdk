@@ -10,6 +10,11 @@ export const urls = {
     development: 'http://apply.localhost:3001',
     staging: 'https://staging-apply.creditkey.com',
     production: 'https://apply.creditkey.com'
+  },
+  checkout: {
+    development: 'http://localhost:3001',
+    staging: 'https://staging-checkout.creditkey.com',
+    production: 'https://checkout.creditkey.com'
   }
 }
 

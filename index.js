@@ -1,6 +1,10 @@
 import { actions, urls } from './settings';
 import { iframe, iframeCallback } from './modules/iframe';
 import { modal, modalCallback } from './modules/modal';
+import Charges from './helpers/charges';
+import Address from './helpers/address';
+import CartItem from './helpers/cart-item';
+import beginCheckout from './async/begin_checkout';
 
 const state = {
   public_key: '',
@@ -25,30 +29,46 @@ const ckSDK = (public_key, platform) => {
   state.platform = platform;
 
   return {
-    apply,
-    checkout,
-    promoDisplay
+    action: {
+      apply: applyAction,
+      checkout: checkoutAction
+    },
+    display: {
+      apply: applyDisplay,
+      checkout: checkoutDisplay
+    },
+    async: {
+      apply: applyAction,
+      checkout: beginCheckout.bind(null, public_key, platform)
+    },
+    helper: {
+      address: Address,
+      cart_item: CartItem,
+      charges: Charges
+    }
   }
 }
+
+const applyUrl = template => `${urls.marketing[state.platform]}/${template}.html?public_key=${state.public_key}`;
 
 /*
  * params
  * - amount Float (100.00)
- * - version String (v1, v2, etc)
  * - action String (modal, redirect)
+ * - template String (layout to use at marketing site)
  *
  * returns a string representing an iframe DOM element
  * that loads a state determined url
 */
-const promoDisplay = ( amount, version = 'v1', action = 'modal' ) => {
-  state.amount = amount;
-  state.action = action;
-  const url = `${urls.marketing[state.platform]}/standard_pdp.html?public_key=${state.public_key}&amount=${amount}&version=${version}&action=${action}`;
-
-  return iframe(url);
+const applyDisplay = (amount, action = 'redirect', template = 'standard_pdp') => {
+  return iframe(`${applyUrl(template)}&amount=${amount}&action=${action}`);
 }
 
-const checkout = (url, action = 'modal') => {
+const checkoutDisplay = () => {
+  return '<img style="height:24px;" className="logo" src="https://creditkey-assets.s3-us-west-2.amazonaws.com/ck-checkout%402x.png" alt="CreditKey Logo" />';
+}
+
+const checkoutAction = (url, action = 'modal') => {
   state.action = action;
 
   if (action === 'modal') {
@@ -58,7 +78,7 @@ const checkout = (url, action = 'modal') => {
   }
 }
 
-const apply = (action = 'modal') => {
+const applyAction = (action = 'modal') => {
   state.action = action;
   return actions[state.action](state);
 }

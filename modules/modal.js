@@ -43,10 +43,10 @@ function redirect(uri) {
 export const modal = source => {
   // Check to see if we've already created the modal - but hidden it when the user clicked off.
   // If so, simply redisplay the modal.
-  const existingModal = document.getElementById('ck-modal');
+  const existingModal = document.getElementById('creditkey-modal');
 
   if (existingModal !== null) {
-    let iframe = document.getElementById('ck-modal-iframe');
+    let iframe = document.getElementById('creditkey-iframe');
     let url = iframe.src;
     if (url !== source + '?modal=true') {
       existingModal.remove();
@@ -69,12 +69,12 @@ export const modalCallback = data => {
   if (!iframe_element || !modal_element) return false;
 
   // if we're closing the modal from within the CK iframe, trigger the event bound to parent body
-  if (event.action === 'cancel' && event.type === 'modal') {
+  if (data.action === 'cancel' && data.type === 'modal') {
     remove();
-  } else if (event.action == 'complete' && event.type == 'modal') {
+  } else if (data.action == 'complete' && data.type == 'modal') {
     redirect(event.options);
-  } else if (event.action == 'height' && event.type == 'modal') {
-    const total_height = event.options + 14; // 14 allows padding underneath content (usually legal footer)
+  } else if (data.action == 'height' && data.type == 'modal') {
+    const total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
 
     // set the iframe, the parent div, and that div's parent height to something that adjusts to content height
     iframe_element.style.height = total_height.toString() + 'px';
