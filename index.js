@@ -1,4 +1,4 @@
-import { actions, urls } from './settings';
+import { actions, marketingSite } from './settings';
 import { iframe, iframeCallback } from './modules/iframe';
 import { modal, modalCallback } from './modules/modal';
 import Charges from './helpers/charges';
@@ -59,7 +59,7 @@ const ckSDK = (public_key, platform) => {
  * that loads a state determined url
 */
 const promoDisplay = ( amount, version = 'v1', action = 'modal' ) => {
-  const url = `${urls.marketing[state.platform]}/standard_pdp.html?public_key=${state.public_key}&amount=${amount}&version=${version}&action=${action}`;
+  const url = `${marketingSite[state.platform]}/pdp.html?public_key=${state.public_key}&amount=${amount}&version=${version}&action=${action}`;
   return iframe(url);
 }
 
@@ -90,7 +90,6 @@ const apply = (action = 'modal') => {
  * - options Object
   * */
 function registerPostMessageCallbacks() {
-  console.log('test');
   window.addEventListener('message', function (e) {
     let data;
 
