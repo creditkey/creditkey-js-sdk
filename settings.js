@@ -2,7 +2,7 @@ import { modal } from './modules/modal';
 
 export const urls = {
   marketing: {
-    development: 'http://localhost:3002',
+    development: process.env.REACT_APP_MARKETING_UI || 'http://localhost:3002',
     staging: 'https://staging-marketing.creditkey.com',
     production: 'https://marketing.creditkey.com'
   }, 
