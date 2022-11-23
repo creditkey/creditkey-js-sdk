@@ -68,13 +68,19 @@ export const modal = source => {
 
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
-    console.log(source);
-    return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal"><div class="ck-modal is-active" style="height:fit-content;background: transparent !important;position: absolute;"><div class="ck-modal-background"></div><div class="ck-modal-content" id="ck-modal-card" style="min-height: min-content;max-height: none;"><iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true "  width="100%"></iframe></div></div></div>`);
+    return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
+        <div class="ck-modal is-active" style="height:fit-content;background: transparent !important;position: absolute;">
+          <div class="ck-modal-background"></div>
+          <div class="ck-modal-content" id="ck-modal-card" style="min-height: min-content;max-height: none;">
+            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true" width="100%"></iframe>
+          </div>
+        </div>
+      </div>`);
   }
 }
 
 export const modalCallback = data => {
-  let modal_element = document.getElementById('creditkey-modal');
+  let modal_element = document.getElementById('ck-modal-card');
   let iframe_element = document.getElementById('creditkey-iframe');
 
   if (!iframe_element || !modal_element) return false;
