@@ -30,15 +30,15 @@ const ckSDK = (public_key, platform) => {
 
   return {
     action: {
-      apply: apply,
-      checkout: checkout
+      apply: applyAction,
+      checkout: checkoutAction
     },
     display: {
-      apply: promoDisplay,
+      apply: applyDisplay,
       checkout: checkoutDisplay
     },
     async: {
-      apply: apply,
+      apply: applyAction,
       checkout: beginCheckout.bind(null, public_key, platform)
     },
     helper: {
@@ -49,25 +49,26 @@ const ckSDK = (public_key, platform) => {
   }
 }
 
+const applyUrl = template => `${urls.marketing[state.platform]}/${template}.html?public_key=${state.public_key}`;
+
 /*
  * params
  * - amount Float (100.00)
- * - version String (v1, v2, etc)
  * - action String (modal, redirect)
+ * - template String (layout to use at marketing site)
  *
  * returns a string representing an iframe DOM element
  * that loads a state determined url
 */
-const promoDisplay = ( amount, version = 'v1', action = 'modal' ) => {
-  const url = `${urls.marketing[state.platform]}/standard_pdp.html?public_key=${state.public_key}&amount=${amount}&version=${version}&action=${action}`;
-  return iframe(url);
+const applyDisplay = (amount, action = 'redirect', template = 'standard_pdp') => {
+  return iframe(`${applyUrl(template)}&amount=${amount}&action=${action}`);
 }
 
 const checkoutDisplay = () => {
   return '<img style="height:24px;" className="logo" src="https://creditkey-assets.s3-us-west-2.amazonaws.com/ck-checkout%402x.png" alt="CreditKey Logo" />';
 }
 
-const checkout = (url, action = 'modal') => {
+const checkoutAction = (url, action = 'modal') => {
   state.action = action;
 
   if (action === 'modal') {
@@ -77,7 +78,7 @@ const checkout = (url, action = 'modal') => {
   }
 }
 
-const apply = (action = 'modal') => {
+const applyAction = (action = 'modal') => {
   state.action = action;
   return actions[state.action](state);
 }
