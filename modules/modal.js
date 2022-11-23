@@ -69,10 +69,10 @@ export const modal = source => {
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
     return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
-        <div class="ck-modal is-active" style="height:fit-content;background: transparent !important;position: absolute;">
-          <div class="ck-modal-background"></div>
-          <div class="ck-modal-content" id="ck-modal-card" style="min-height: min-content;max-height: none;">
-            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true" width="100%"></iframe>
+        <div class="ck-modal is-active">
+          <div class="ck-modal-background" styles="${styles.modal.background}"></div>
+          <div class="ck-modal-content" id="ck-modal-card" styles="${styles.modal.content}">
+            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${source}?modal=true" width="100%"></iframe>
           </div>
         </div>
       </div>`);
@@ -80,10 +80,10 @@ export const modal = source => {
 }
 
 export const modalCallback = data => {
-  let modal_element = document.getElementById('ck-modal-card');
+  let outer_element = document.getElementById('creditkey-modal');
   let iframe_element = document.getElementById('creditkey-iframe');
 
-  if (!iframe_element || !modal_element) return false;
+  if (!iframe_element || !outer_element) return false;
 
   // if we're closing the modal from within the CK iframe, trigger the event bound to parent body
   if (data.action === 'cancel' && data.type === 'modal') {
@@ -99,7 +99,8 @@ export const modalCallback = data => {
     // Pad parent div height because issues where Chrome's calc'd <body> height is different than other browsers
     //  which cuts of the bottom rounded corners
     if ((total_height + 60) > window.innerHeight) {
-      modal_element.parentNode.style.height = (total_height + 60).toString() + 'px';
+      outer_element.style.height = (total_height + 60).toString() + 'px';
+      console.log(outer_element.style.height);
     }
 
     // force scroll to top because modal starts at top of page.
