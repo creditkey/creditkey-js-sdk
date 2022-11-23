@@ -9,6 +9,6 @@ export default function api(platform) {
       break;
 
     default:
-      return process.env.CK_WEB || 'http://localhost:9100/ecomm';
+      return process.env.REACT_APP_API + '/ecomm' || 'http://localhost:9100/ecomm';
   }
 }
