@@ -70,8 +70,8 @@ export const modal = source => {
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
     return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
         <div class="ck-modal is-active">
-          <div class="ck-modal-background" styles="${styles.modal.background}"></div>
-          <div class="ck-modal-content" id="ck-modal-card" styles="${styles.modal.content}">
+          <div class="ck-modal-background" style="${styles.modal.background}"></div>
+          <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
             <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${source}?modal=true" width="100%"></iframe>
           </div>
         </div>
