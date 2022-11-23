@@ -1,5 +1,3 @@
-import { iframe } from './iframe';
-
 const styles = {
   modal: {
     height:    `height: inherit;`,
@@ -62,19 +60,16 @@ export const modal = source => {
     existingModal.style.display = 'flex';
   } else {
     // Otherwise, create the modal.
-    
         
-    // <div style="${styles.modal.background}">
-    //     <div id="creditkey-modal" style="${styles.modal.content}">${iframe(source + '?modal=true')}</div>
-    //   </div>
+     //<div style="${styles.modal.background}">
+         //<div id="creditkey-modal" style="${styles.modal.content}">${iframe(source + '?modal=true')}</div>
+       //</div>
 
 
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
-    return body.insertAdjacentHTML('beforeend', `return body.insertAdjacentHTML('beforeend', '<div class="creditkey" id="creditkey-modal"><div class="ck-modal is-active" style="height:fit-content;background: transparent !important;position: absolute;"><div class="ck-modal-background"></div><div class="ck-modal-content" id="ck-modal-card" style="min-height: min-content;max-height: none;"><iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0"${iframe(source + '?modal=true')}style="margin: auto;
-    width: 100%; 
-    border: none;
-    height: inherit !important;"></iframe></div></div></div>);`);
+    console.log(source);
+    return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal"><div class="ck-modal is-active" style="height:fit-content;background: transparent !important;position: absolute;"><div class="ck-modal-background"></div><div class="ck-modal-content" id="ck-modal-card" style="min-height: min-content;max-height: none;"><iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true "  width="100%"></iframe></div></div></div>`);
   }
 }
 
