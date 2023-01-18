@@ -8,5 +8,6 @@ export const iframe = url => {
 }
 
 export const iframeCallback = (data, state) => {
+  console.log(state);
   if (data.action === 'pdp') actions[state.action](state);
 }

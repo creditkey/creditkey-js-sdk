@@ -30,7 +30,7 @@ const ckSDK = (public_key, platform) => {
 
   return {
     action: {
-      apply: applyAction,
+      //apply: applyAction,
       checkout: checkoutAction
     },
     display: {
@@ -38,7 +38,7 @@ const ckSDK = (public_key, platform) => {
       checkout: checkoutDisplay
     },
     async: {
-      apply: applyAction,
+      //apply: applyAction,
       checkout: beginCheckout.bind(null, public_key, platform)
     },
     helper: {
@@ -61,7 +61,7 @@ const applyUrl = template => `${urls.marketing[state.platform]}/${template}.html
  * that loads a state determined url
 */
 const applyDisplay = (amount, action = 'redirect', template = 'standard_pdp') => {
-  return iframe(`${applyUrl(template)}&amount=${amount}&action=${action}`);
+  return iframe(`${applyUrl(template)}&amount=${amount}&redirect=${action}`);
 }
 
 const checkoutDisplay = () => {
@@ -78,10 +78,10 @@ const checkoutAction = (url, action = 'modal') => {
   }
 }
 
-const applyAction = (action = 'modal') => {
-  state.action = action;
-  return actions[state.action](state);
-}
+/*const applyAction = (action = 'modal') => {*/
+  /*state.action = action;*/
+  /*return actions[state.action](state);*/
+/*}*/
 
 /*
  * adds post message callback event listener
@@ -91,7 +91,6 @@ const applyAction = (action = 'modal') => {
  * - options Object
   * */
 function registerPostMessageCallbacks() {
-  console.log('test');
   window.addEventListener('message', function (e) {
     let data;
 
