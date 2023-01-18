@@ -1,8 +1,34 @@
 const styles = {
   modal: {
-    height:    `height: inherit;`,
+    outercontainer: `z-index:50000;`,
 
-    background: `display: block; /* Hidden by default */
+    container:  `margin: 0 !important;
+                  padding-top: 50px;
+                  max-width: 100% !important;
+                  width: 100% !important;
+                  visibility: visible !important;
+                  background: transparent !important;
+                  position: absolute;
+                  justify-content: normal;
+                  height: inherit;`,
+    ckmodal:    `
+                  background: transparent!important;
+                  justify-content: normal;
+                  margin: 0!important;
+                  max-width: 100%!important;
+                  padding-top: 50px;
+                  position: absolute;
+                  visibility: visible!important;
+                  width: 100%!important;
+                  position:absolute;
+                  top:0;
+                  height: inherit;
+                  min-height:600px`,
+
+    iframe:     `height:min-content;
+                  height: inherit;`,
+
+    background: `
                  position: fixed; /* Stay in place */
                  z-index: 1; /* Sit on top */
                  left: 0;
@@ -10,20 +36,29 @@ const styles = {
                  width: 100%; /* Full width */
                  height: inherit; /* Full height */
                  overflow: auto; /* Enable scroll if needed */
-                 background-color: rgb(0,0,0); /* Fallback color */
-                 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-                 z-index:5;`,
+                 //background-color: rgb(0,0,0); /* Fallback color */
+                 //background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+                 `,
+
     content: `background-color: #fefefe;
               margin: 5% auto; /* 5% from the top and centered */
               padding: 10px;
-              border: 1px solid #888;
+              border: 1px solid #ccc;
               max-width: 600px; /* Could be more or less, depending on screen size */
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
               animation-name: animatetop;
               animation-duration: 0.4s;
               border-radius:5px;
-              inherit:5px;
-              height: inherit;`
+              background-color: #fff;
+              background-position: 50%;
+              background-repeat: no-repeat;
+              border-radius: 5px;
+              height: inherit;
+              max-height: none;
+              min-height: -moz-min-content;
+              min-height: min-content;
+              overflow: hidden;
+              z-index:2000;`
             
   }
 }
