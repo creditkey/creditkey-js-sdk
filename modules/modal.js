@@ -1,47 +1,41 @@
 const styles = {
   modal: {
-    ckmodal:    `
-                  background: transparent !important;
-                  justify-content: normal;
-                  margin: 0!important;
-                  max-width: 100%;
-                  padding-top: 50px;
-                  position: absolute;
-                  width: 100%!important;
-                  z-index:2000;`,
+    ckmodal:  `margin-top: 20px;
+                background: transparent !important;
+                justify-content: normal;
+                max-width: 100%;
+                position: absolute;
+                width: 100%!important;
+                z-index:2000;
+                height: inherit;
+                position:absolute;
+                top:0;
+                margin-top: 5%;`,
 
     iframe: `width: 100%;
-
-    `,
+              height: inherit;
+              backtground: transparent;`,
 
     background: `position:fixed;
                   bottom: 0;
                   left: 0;
                   right: 0;
                   top: 0;
-                 background-color: rgb(0,0,0); /* Fallback color */
-                 background-color: hsla(0,0%,4%,.86); /* Black w/ opacity */
-                 `,
+                  background-color: rgb(0,0,0); /* Fallback color */
+                  background-color: hsla(0,0%,4%,.86); /* Black w/ opacity */`,
 
-    content: `background-color: #fefefe;
-              margin: 5% auto; /* 5% from the top and centered */
-              padding: 10px;
-              border: 1px solid #ccc;
+    content: `background-color: #ffffff;
+              margin: 0 auto; /* 5% from the top and centered */
+              width: 45%; /* Could be more or less, depending on screen size */
               max-width: 600px; /* Could be more or less, depending on screen size */
               box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
               animation-name: animatetop;
+              animation-duration: 0.4s
               animation-duration: 0.4s;
               border-radius:5px;
-              background-color: #fff;
-              background-position: 50%;
-              background-repeat: no-repeat;
-              border-radius: 5px;
-              max-height: none;
-              min-height: -moz-min-content;
-              min-height: 600px !important;
-              overflow:auto;
-              z-index:2000;
-             `
+              height: inherit;
+              position: relative;
+              width:100%;`
   }
 }
 
@@ -91,7 +85,8 @@ export const modal = source => {
 }
 
 export const modalCallback = data => {
-  let outer_element = document.getElementById('creditkey-modal');
+ 
+  let outer_element = document.getElementById('ck-modal-card');
   let iframe_element = document.getElementById('creditkey-iframe');
 
   if (!iframe_element || !outer_element) return false;
@@ -102,6 +97,7 @@ export const modalCallback = data => {
   } else if (data.action == 'complete' && data.type == 'modal') {
     redirect(data.options);
   } else if (data.action == 'height' && data.type == 'modal') {
+
     var total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
     // set the iframe, the parent div, and that div's parent height to something that adjusts to content height
 
