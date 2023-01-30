@@ -1,43 +1,26 @@
 const styles = {
   modal: {
-    outercontainer: `z-index:50000;`,
-
-    container:  `margin: 0 !important;
-                  padding-top: 50px;
-                  max-width: 100% !important;
-                  width: 100% !important;
-                  visibility: visible !important;
-                  background: transparent !important;
-                  position: absolute;
-                  justify-content: normal;
-                  height: inherit;`,
     ckmodal:    `
-                  background: transparent!important;
+                  background: transparent !important;
                   justify-content: normal;
                   margin: 0!important;
-                  max-width: 100%!important;
+                  max-width: 100%;
                   padding-top: 50px;
                   position: absolute;
-                  visibility: visible!important;
                   width: 100%!important;
-                  position:absolute;
-                  top:0;
-                  height: inherit;
-                  min-height:600px`,
+                  z-index:2000;`,
 
-    iframe:     `height:min-content;
-                  height: inherit;`,
+    iframe: `width: 100%;
 
-    background: `
-                 position: fixed; /* Stay in place */
-                 z-index: 1; /* Sit on top */
-                 left: 0;
-                 top: 0;
-                 width: 100%; /* Full width */
-                 height: inherit; /* Full height */
-                 overflow: auto; /* Enable scroll if needed */
-                 //background-color: rgb(0,0,0); /* Fallback color */
-                 //background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    `,
+
+    background: `position:fixed;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                 background-color: rgb(0,0,0); /* Fallback color */
+                 background-color: hsla(0,0%,4%,.86); /* Black w/ opacity */
                  `,
 
     content: `background-color: #fefefe;
@@ -53,13 +36,12 @@ const styles = {
               background-position: 50%;
               background-repeat: no-repeat;
               border-radius: 5px;
-              height: inherit;
               max-height: none;
               min-height: -moz-min-content;
-              min-height: min-content;
-              overflow: hidden;
-              z-index:2000;`
-            
+              min-height: 600px !important;
+              overflow:auto;
+              z-index:2000;
+             `
   }
 }
 
@@ -95,12 +77,6 @@ export const modal = source => {
     existingModal.style.display = 'flex';
   } else {
     // Otherwise, create the modal.
-        
-     //<div style="${styles.modal.background}">
-         //<div id="creditkey-modal" style="${styles.modal.content}">${iframe(source + '?modal=true')}</div>
-       //</div>
-
-
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
     return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
@@ -124,18 +100,15 @@ export const modalCallback = data => {
   if (data.action === 'cancel' && data.type === 'modal') {
     remove();
   } else if (data.action == 'complete' && data.type == 'modal') {
-    redirect(event.options);
+    redirect(data.options);
   } else if (data.action == 'height' && data.type == 'modal') {
-    const total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
-
+    var total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
     // set the iframe, the parent div, and that div's parent height to something that adjusts to content height
-    iframe_element.style.height = total_height.toString() + 'px';
 
-    // Pad parent div height because issues where Chrome's calc'd <body> height is different than other browsers
+    iframe_element.style.height = total_height.toString() + 'px'; // Pad parent div height because issues where Chrome's calc'd <body> height is different than other browsers
     //  which cuts of the bottom rounded corners
     if ((total_height + 60) > window.innerHeight) {
       outer_element.style.height = (total_height + 60).toString() + 'px';
-      console.log(outer_element.style.height);
     }
 
     // force scroll to top because modal starts at top of page.
