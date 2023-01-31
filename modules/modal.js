@@ -4,6 +4,7 @@ const styles = {
                 background: transparent !important;
                 justify-content: normal;
                 max-width: 100%;
+                min-height: 400px;
                 position: absolute;
                 width: 100%!important;
                 z-index:2000;
@@ -14,7 +15,8 @@ const styles = {
 
     iframe: `width: 100%;
               height: inherit;
-              backtground: transparent;`,
+              min-height: 400px;
+              backtground: #fff;`,
 
     background: `position:fixed;
                   bottom: 0;
@@ -28,14 +30,14 @@ const styles = {
               margin: 0 auto; /* 5% from the top and centered */
               width: 45%; /* Could be more or less, depending on screen size */
               max-width: 600px; /* Could be more or less, depending on screen size */
-              box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
               animation-name: animatetop;
               animation-duration: 0.4s
               animation-duration: 0.4s;
               border-radius:5px;
               height: inherit;
               position: relative;
-              width:100%;`
+              width:100%;
+              min-height: 400px;`
   }
 }
 
@@ -73,14 +75,18 @@ export const modal = source => {
     // Otherwise, create the modal.
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
-    return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
-        <div class="ck-modal is-active">
-          <div class="ck-modal-background" style="${styles.modal.background}"></div>
-          <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
-            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${source}?modal=true" width="100%"></iframe>
+
+    return body.insertAdjacentHTML('beforeend', `
+      <div class="creditkey" id="creditkey-modal"><div class="ck-modal is-active">
+        <div class="modal-background" style="${styles.modal.background}"></div>
+          <div id="creditkey-modal" style="${styles.modal.ckmodal}">
+            <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
+              <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true " style="${styles.modal.content}" ></iframe>
+           </div>
           </div>
         </div>
-      </div>`);
+      </div>
+    `);
   }
 }
 
