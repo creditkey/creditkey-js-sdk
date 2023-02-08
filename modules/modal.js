@@ -81,7 +81,7 @@ export const modal = source => {
         <div class="modal-background" style="${styles.modal.background}"></div>
           <div id="creditkey-modal" style="${styles.modal.ckmodal}">
             <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
-              <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true " style="${styles.modal.content}" ></iframe>
+              <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true " style="${styles.modal.iframe}" ></iframe>
            </div>
           </div>
         </div>
