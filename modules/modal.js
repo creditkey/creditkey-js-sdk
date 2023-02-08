@@ -1,30 +1,43 @@
 const styles = {
   modal: {
-    height:    `height: inherit;`,
+    ckmodal:  `margin-top: 20px;
+                background: transparent !important;
+                justify-content: normal;
+                max-width: 100%;
+                min-height: 400px;
+                position: absolute;
+                width: 100%!important;
+                z-index:2000;
+                height: inherit;
+                position:absolute;
+                top:0;
+                margin-top: 5%;`,
 
-    background: `display: block; /* Hidden by default */
-                 position: fixed; /* Stay in place */
-                 z-index: 1; /* Sit on top */
-                 left: 0;
-                 top: 0;
-                 width: 100%; /* Full width */
-                 height: inherit; /* Full height */
-                 overflow: auto; /* Enable scroll if needed */
-                 background-color: rgb(0,0,0); /* Fallback color */
-                 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-                 z-index:5;`,
-    content: `background-color: #fefefe;
-              margin: 5% auto; /* 5% from the top and centered */
-              padding: 10px;
-              border: 1px solid #888;
+    iframe: `width: 100%;
+              height: inherit;
+              min-height: 400px;
+              backtground: #fff;`,
+
+    background: `position:fixed;
+                  bottom: 0;
+                  left: 0;
+                  right: 0;
+                  top: 0;
+                  background-color: rgb(0,0,0); /* Fallback color */
+                  background-color: hsla(0,0%,4%,.86); /* Black w/ opacity */`,
+
+    content: `background-color: #ffffff;
+              margin: 0 auto; /* 5% from the top and centered */
+              width: 45%; /* Could be more or less, depending on screen size */
               max-width: 600px; /* Could be more or less, depending on screen size */
-              box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
               animation-name: animatetop;
+              animation-duration: 0.4s
               animation-duration: 0.4s;
               border-radius:5px;
-              inherit:5px;
-              height: inherit;`
-            
+              height: inherit;
+              position: relative;
+              width:100%;
+              min-height: 400px;`
   }
 }
 
@@ -60,27 +73,26 @@ export const modal = source => {
     existingModal.style.display = 'flex';
   } else {
     // Otherwise, create the modal.
-        
-     //<div style="${styles.modal.background}">
-         //<div id="creditkey-modal" style="${styles.modal.content}">${iframe(source + '?modal=true')}</div>
-       //</div>
-
-
     const body = document.body;
     // default height set for UX during load, will be changed via updateParent() from inside iframe content later
-    return body.insertAdjacentHTML('beforeend', `<div class="creditkey" id="creditkey-modal">
-        <div class="ck-modal is-active">
-          <div class="ck-modal-background" style="${styles.modal.background}"></div>
-          <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
-            <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src="${source}?modal=true" width="100%"></iframe>
+
+    return body.insertAdjacentHTML('beforeend', `
+      <div class="creditkey" id="creditkey-modal"><div class="ck-modal is-active">
+        <div class="modal-background" style="${styles.modal.background}"></div>
+          <div id="creditkey-modal" style="${styles.modal.ckmodal}">
+            <div class="ck-modal-content" id="ck-modal-card" style="${styles.modal.content}">
+              <iframe allowtransparency="true" scrolling="no" id="creditkey-iframe" frameBorder="0" src=" ${source}?modal=true " style="${styles.modal.iframe}" ></iframe>
+           </div>
           </div>
         </div>
-      </div>`);
+      </div>
+    `);
   }
 }
 
 export const modalCallback = data => {
-  let outer_element = document.getElementById('creditkey-modal');
+ 
+  let outer_element = document.getElementById('ck-modal-card');
   let iframe_element = document.getElementById('creditkey-iframe');
 
   if (!iframe_element || !outer_element) return false;
@@ -89,18 +101,16 @@ export const modalCallback = data => {
   if (data.action === 'cancel' && data.type === 'modal') {
     remove();
   } else if (data.action == 'complete' && data.type == 'modal') {
-    redirect(event.options);
+    redirect(data.options);
   } else if (data.action == 'height' && data.type == 'modal') {
-    const total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
 
+    var total_height = data.options + 14; // 14 allows padding underneath content (usually legal footer)
     // set the iframe, the parent div, and that div's parent height to something that adjusts to content height
-    iframe_element.style.height = total_height.toString() + 'px';
 
-    // Pad parent div height because issues where Chrome's calc'd <body> height is different than other browsers
+    iframe_element.style.height = total_height.toString() + 'px'; // Pad parent div height because issues where Chrome's calc'd <body> height is different than other browsers
     //  which cuts of the bottom rounded corners
     if ((total_height + 60) > window.innerHeight) {
       outer_element.style.height = (total_height + 60).toString() + 'px';
-      console.log(outer_element.style.height);
     }
 
     // force scroll to top because modal starts at top of page.
