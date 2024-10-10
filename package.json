@@ -1,0 +1,20 @@
+{
+  "name": "creditkey-js-sdk",
+  "version": "1.0.0",
+  "description": "Javascript SDK for CreditKey",
+  "source": "src/index.js",
+  "main": "dist/index.js",
+  "module": "dist/module.js",
+  "scripts": {
+    "watch": "parcel watch",
+    "build": "parcel build --no-cache"
+  },
+  "author": "Eben Goodman",
+  "license": "ISC",
+  "devDependencies": {
+    "parcel": "^2.12.0"
+  },
+  "dependencies": {
+    "axios": "^1.7.7"
+  }
+}
