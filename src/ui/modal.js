@@ -54,7 +54,7 @@ function validate_url(url) {
 }
 
 export default function modal(source, completionCallback) {
-  postMessage(completionCallback);
+  postMessage(completionCallback, remove);
 
   const style = document.createElement('style');
   style.type = 'text/css';

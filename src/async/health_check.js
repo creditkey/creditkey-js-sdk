@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default healthCheck(cartItems) {
+export default function healthCheck(cartItems) {
   return new Promise((resolve, reject) => {
     if (!Array.isArray(cartItems)) {
       return reject('cart items must be an array of CartItem objects');

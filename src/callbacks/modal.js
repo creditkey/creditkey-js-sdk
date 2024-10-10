@@ -1,4 +1,6 @@
-export default function postMessage() {
+import redirect from '../ui/redirect';
+
+export default function postMessage(completionCallback, remove) {
   window.addEventListener('message', function(e) {
     if (!e) return false;
     if (e && !e.data) return false;
